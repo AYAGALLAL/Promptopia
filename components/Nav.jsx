@@ -13,10 +13,12 @@ const Nav = () => {
   const [toggleDropDown, settoggleDropDown] = useState(false)
 
   useEffect(() => {
-    const setProviders= async() =>{
+    const setUpProviders= async() =>{
       const response = await getProviders()
       setProviders(response)
     }
+    setUpProviders()
+    console.log(providers)
   },[])
 
   return (
@@ -33,7 +35,6 @@ const Nav = () => {
       </Link>
 
 
-      {alert(session?.user)}
 
       {/*Desktop Navigation*/}
       <div className='sm:flex hidden'>
