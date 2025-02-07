@@ -2,13 +2,14 @@
 
 import React, { useState, useEffect } from "react";
 import PromptCard from "./PromptCard";
+import {getAllPrompts} from '../models/prompt'
 
 const PromptCardList = ({ data, handleTagClick }) => {
   return (
     <div className='mt-16 prompt_layout'>
       {data.map((post) => (
         <PromptCard
-          key={post._id}
+          key={post.id}
           post={post}
           handleTagClick={handleTagClick}
         />
@@ -26,10 +27,9 @@ const Feed = () => {
   const [searchedResults, setSearchedResults] = useState([]);
 
   const fetchPosts = async () => {
-    const response = await fetch("/api/prompt");
-    const data = await response.json();
-
-    setAllPosts(data);
+    const response = await getAllPrompts();                                {/*FETCHING DATA?*/}
+    console.log(response)
+    setAllPosts(response)
   };
 
   useEffect(() => {

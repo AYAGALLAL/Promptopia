@@ -3,7 +3,7 @@ import React from 'react'
 import Link from 'next/link'
 import Image from '@/__mocks__/next/image'
 import { useState, useEffect } from 'react'
-import { signIn, signOut, useSession, getProviders } from 'next-auth/react'
+import { useSession, getProviders } from 'next-auth/react'
 
 
 const Nav = () => {
@@ -43,12 +43,12 @@ const Nav = () => {
           <Link href='/create-prompt' className='black_btn'>
           Create Prompt
           </Link>
-          <button type="button" onClick={signOut} className='outline_btn' >
+          <button type="button" className='outline_btn' >
           Sign Out
           </button>
 
           <Link href='/profile'>
-                                                                              {/* khasha thyed*/}
+                                                                              {/* khasha thyed?*/}
           <Image 
           src='/assets/images/logo.svg' 
           width={37} height={37} className='rounded-full' alt='profile' /> 
@@ -59,7 +59,7 @@ const Nav = () => {
         <>
           {providers && 
           Object.values(providers).map((provider) => (
-            <button type='button' key={provider.name} onClick={() => signIn(provider.id)} className='black_btn'>
+            <button type='button' key={provider.name}  className='black_btn'>
               Sign In
             </button>
           ))}
@@ -89,8 +89,7 @@ const Nav = () => {
                 </Link>
                 <button type='button'
                   onClick={() => {
-                    settoggleDropDown(false)
-                    signOut()}}
+                    settoggleDropDown(false)}}
                   className='mt-5 w-full black_btn'>
                   Sign Out
                 </button>
@@ -103,7 +102,7 @@ const Nav = () => {
           <>
           {providers && 
           Object.values(providers).map((provider) => (
-            <button type='button' key={provider.name} onClick={() => signIn(provider.id)} className='black_btn'>
+            <button type='button' key={provider.name} className='black_btn'>
               Sign In
             </button>
           ))}

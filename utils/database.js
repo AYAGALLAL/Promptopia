@@ -1,25 +1,33 @@
 import mongoose from "mongoose";
 
-let isConnected = false //track connection status
+const DATABASE_URL = process.env.DATABASE_URL;
 
-export const connectToDb = async () => {
-  mongoose.set('strictQuery', true)
-
-  if (isConnected){
-    console.log('MongoDB is Already Connected!')
-    return
-  }
-
-  try {
-    await mongoose.connect(process.env.MONGODB_URI, {
-      dbName:"share_prompt",
-      useNewUrlParser: true,
-      useUnifiedTopology: true,
-    })
-
-    isConnected = true
-    console.log('MongoDB connected')
-  } catch (error) {
-    console.log(error)
-  }
+if (!DATABASE_URL) {
+  throw new Error("Please define the DATABASE_URL environment variable inside .env.local");
 }
+
+let cached = global.mongoose;
+
+if (!cached) {
+  cached = global.mongoose = { conn: null, promise: null };
+}
+
+async function connectToDB() {
+  if (cached.conn) {
+    return cached.conn;
+  }
+
+  if (!cached.promise) {
+    const opts = {
+      bufferCommands: false,
+    };
+
+    cached.promise = mongoose.connect(DATABASE_URL, opts).then((mongoose) => {
+      return mongoose;
+    });
+  }
+  cached.conn = await cached.promise;
+  return cached.conn;
+}
+
+export default connectToDB;
