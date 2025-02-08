@@ -41,7 +41,7 @@ const CreatePrompt = () => {
       <span className='blue_gradient'>Post</span>
     </h1>
     <p className='desc text-left max-w-md'>
-      and share amazing prompts with the world, and let your
+      Create and share amazing prompts with the world, and let your
       imagination run wild with any AI-powered platform
     </p>
 

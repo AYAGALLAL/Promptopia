@@ -3,23 +3,31 @@ import React from 'react'
 import Link from 'next/link'
 import Image from '@/__mocks__/next/image'
 import { useState, useEffect } from 'react'
-import { useSession, getProviders } from 'next-auth/react'
+import { useAuth } from "../lib/useauth";
+import { auth, signOut } from '../firebase.config'
+import { useRouter } from 'next/navigation';
+
 
 
 const Nav = () => {
-  const { data: session } = useSession()
 
-  const[providers, setProviders]=useState(null)
   const [toggleDropDown, settoggleDropDown] = useState(false)
+  const { user } = useAuth();
+  const router = useRouter()
 
   useEffect(() => {
-    const setUpProviders= async() =>{
-      const response = await getProviders()
-      setProviders(response)
-    }
-    setUpProviders()
-    console.log(providers)
-  },[])
+    
+    },[])
+
+    const logout = async () => {
+      try {
+        await signOut(auth);
+        console.log("User signed out successfully!");
+        router.push('/register') 
+      } catch (error) {
+        console.error("Error signing out:", error);
+      }
+    };
 
   return (
     <nav className='flex-between w-full mb-16 pt-3'>
@@ -38,12 +46,12 @@ const Nav = () => {
 
       {/*Desktop Navigation*/}
       <div className='sm:flex hidden'>
-      {session?.user ? (
+      {user ? (
         <div className='flex gap-3 md:gp-5'>
           <Link href='/create-prompt' className='black_btn'>
           Create Prompt
           </Link>
-          <button type="button" className='outline_btn' >
+          <button type="button" className='outline_btn' onClick={logout}>
           Sign Out
           </button>
 
@@ -57,19 +65,18 @@ const Nav = () => {
         </div>
       ):(
         <>
-          {providers && 
-          Object.values(providers).map((provider) => (
-            <button type='button' key={provider.name}  className='black_btn'>
+          
+            <button type='button'  className='black_btn'>
               Sign In
             </button>
-          ))}
+          
         </>
       )}
       </div>
 
       {/*Mobile Navigation*/}
       <div className='sm:hidden flex relative'>
-        {session?.user ? (
+        {user ? (
           <div className='flex'>
             <Image 
               src='/assets/images/logo.svg' 
@@ -87,10 +94,14 @@ const Nav = () => {
                 <Link href='/create-prompt' className='dropdown_link' onClick={() => settoggleDropDown(false)}>
                   Create Prompt
                 </Link>
-                <button type='button'
-                  onClick={() => {
-                    settoggleDropDown(false)}}
-                  className='mt-5 w-full black_btn'>
+                <button 
+                    type='button'
+                    onClick={() => {
+                      settoggleDropDown(false); // Close dropdown first
+                      logout(); // Then log out the user
+                    }}
+                    className='mt-5 w-full black_btn'
+                  >
                   Sign Out
                 </button>
                 
@@ -100,12 +111,10 @@ const Nav = () => {
           </div>
         ):(
           <>
-          {providers && 
-          Object.values(providers).map((provider) => (
-            <button type='button' key={provider.name} className='black_btn'>
+          
+            <button type='button' className='black_btn'>
               Sign In
             </button>
-          ))}
         </>
         )}
       </div>

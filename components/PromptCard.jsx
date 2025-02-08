@@ -5,7 +5,7 @@ import Image from "next/image";
 import { usePathname, useRouter } from "next/navigation";
 import { deletePrompt } from '../models/prompt'
 
-const PromptCard = ({ post, handleEdit, handleTagClick }) => {
+const PromptCard = ({ post, handleTagClick }) => {
   const pathName = usePathname();
   const router = useRouter();
 
@@ -28,6 +28,10 @@ const PromptCard = ({ post, handleEdit, handleTagClick }) => {
   const handleDelete = async(id) =>{
     await deletePrompt(id)
   }
+
+  const handleEdit = (promptId) => {
+    router.push(`/update-prompt?Id=${promptId}`);
+  };
 
   return (
     <div className='prompt_card'>
@@ -76,14 +80,14 @@ const PromptCard = ({ post, handleEdit, handleTagClick }) => {
         <div className='mt-5 flex-center gap-4 border-t border-gray-100 pt-3'>
           <p
             className='font-inter text-sm green_gradient cursor-pointer'
-            onClick={handleEdit}
+            onClick={() => handleEdit(post.id)}
           >
             Edit
           </p>
           <p
             className='font-inter text-sm orange_gradient cursor-pointer'
-            onClick={handleDelete(post.id)}
-          >
+            onClick={() => handleDelete(post.id)}
+>
             Delete
           </p>
         </div>
