@@ -50,7 +50,7 @@ const PromptCard = ({ post, handleTagClick }) => {
 
           <div className='flex flex-col'>
             <p className='font-inter text-sm text-gray-500'>
-              fonction bach 
+            {post.creator?.email || "Unknown User"}
             </p>
           </div>
         </div>

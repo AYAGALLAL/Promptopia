@@ -9,7 +9,6 @@ import Link from "next/link";
 
 
 
-import Form from "@components/Form";
 
 const CreatePrompt = () => {
   const router = useRouter();

@@ -8,6 +8,7 @@ const customJestConfig = {
     "^@/components/(.*)$": "<rootDir>/components/$1",
     "^@/app/(.*)$": "<rootDir>/app/$1",
     "\\.(css|scss|sass)$": "identity-obj-proxy",
+    "^@components/(.*)$": "<rootDir>/components/$1",
   },
 };
 

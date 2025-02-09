@@ -6,8 +6,6 @@ import { getOnePrompt, updatePrompt } from '../../models/prompt'
 import Link from "next/link";
 
 
-import Form from "@components/Form";
-
 const UpdatePrompt = () => {
   const searchParams = useSearchParams();
   const Id = searchParams.get("Id"); // ✅ Correct way to get query params
