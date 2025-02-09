@@ -1,7 +1,7 @@
 'use client'
 import React from 'react'
 import Link from 'next/link'
-import Image from '@/__mocks__/next/image'
+import Image from 'next/image'
 import { useState, useEffect } from 'react'
 import { useAuth } from "../lib/useauth";
 import { auth, signOut } from '../firebase.config'

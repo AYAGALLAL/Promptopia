@@ -26,6 +26,15 @@ const Feed = () => {
   const [searchTimeout, setSearchTimeout] = useState(null);
   const [searchedResults, setSearchedResults] = useState([]);
 
+  useEffect(() => {
+    if (searchText) {
+      setSearchedResults(filterPrompts(searchText));
+    } else {
+      setSearchedResults(allPosts);
+    }
+  }, [searchText]); // ✅ Runs when `searchText` updates
+  
+
   const fetchPosts = async () => {
     const response = await getAllPrompts();                                {/*FETCHING DATA?*/}
     console.log(response)
@@ -61,10 +70,10 @@ const Feed = () => {
 
   const handleTagClick = (tagName) => {
     setSearchText(tagName);
-
-    const searchResult = filterPrompts(tagName);
-    setSearchedResults(searchResult);
+    setSearchedResults(filterPrompts(tagName)); // ✅ Immediately update search results
   };
+  
+  console.log(allPosts, searchedResults)
 
   return (
     <section className='feed'>
