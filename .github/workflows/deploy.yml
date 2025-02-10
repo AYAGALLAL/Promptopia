@@ -19,7 +19,7 @@ jobs:
           node-version: 18 
 
       - name: Install Dependencies
-        run: npm install  
+        run: npm ci  # ✅ Ensures all dependencies are installed
 
   run-tests:
     name: Run Tests
@@ -29,8 +29,11 @@ jobs:
       - name: Checkout Repository
         uses: actions/checkout@v3
 
-      - name: Run Tests
-        run: npm test  
+      - name: Install Dependencies
+        run: npm ci  # ✅ Ensures dependencies are installed before running tests
+
+      - name: Run Jest Tests
+        run: npx jest  # ✅ Uses npx to run Jest without global installation
 
   build-docker:
     name: Build Docker Image
@@ -47,12 +50,12 @@ jobs:
           password: ${{ secrets.DOCKER_PASSWORD }}
 
       - name: Build Docker Image
-        run: docker build -t ayagallal/promptopia .  # ✅ Builds the Docker image with your repository name
+        run: docker build --no-cache -t ayagallal/promptopia .  # ✅ Added --no-cache to prevent old layers from interfering
 
       - name: Save Docker Image as Artifact
-        run: docker save ayagallal/promptopia -o promptopia.tar  # ✅ Saves the image as a `.tar` file
+        run: docker save -o promptopia.tar ayagallal/promptopia  # ✅ Corrected the order of arguments
 
-      - name: Upload Artifact
+      - name: Upload Docker Image as Artifact
         uses: actions/upload-artifact@v3
         with:
           name: docker-image
@@ -74,5 +77,5 @@ jobs:
 
       - name: Tag and Push Image to Docker Hub
         run: |
-          docker tag ayagallal/promptopia ayagallal/promptopia:latest  # ✅ Tags the image
+          docker tag ayagallal/promptopia ayagallal/promptopia:latest  # ✅ Tags the image correctly
           docker push ayagallal/promptopia:latest  # ✅ Pushes the image to Docker Hub
