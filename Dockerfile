@@ -1,4 +1,4 @@
-# Use Debian latest as the base image 
+# Use Debian latest as the base image
 FROM debian:latest
 
 # Install Node.js and npm
