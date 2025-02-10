@@ -12,4 +12,5 @@ const customJestConfig = {
   },
 };
 
-export default customJestConfig;
+// ✅ Use CommonJS in Jest config to avoid GitHub Actions issues
+module.exports = customJestConfig;
