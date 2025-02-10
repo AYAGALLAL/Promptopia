@@ -19,7 +19,11 @@ jobs:
           node-version: 18 
 
       - name: Install Dependencies
-        run: npm ci  # ✅ Ensures all dependencies are installed
+        run: npm install  
+
+      # ✅ Explicitly install Jest & Babel to fix missing dependencies
+      - name: Ensure Jest & Babel are installed
+        run: npm install --save-dev jest babel-jest @babel/preset-env @babel/preset-react
 
   run-tests:
     name: Run Tests
