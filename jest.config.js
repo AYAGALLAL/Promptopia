@@ -12,4 +12,4 @@ const customJestConfig = {
   },
 };
 
-export default customJestConfig;
+module.exports = customJestConfig;
