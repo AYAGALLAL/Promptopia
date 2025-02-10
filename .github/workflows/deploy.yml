@@ -71,7 +71,7 @@ jobs:
     needs: build-docker  # ✅ This job runs only if 'build-docker' is successful
     steps:
       - name: Download Docker Image Artifact
-        uses: actions/download-artifact@v3
+        uses: actions/download-artifact@v4
         with:
           name: docker-image
           path: .  # ✅ Downloads the image artifact
