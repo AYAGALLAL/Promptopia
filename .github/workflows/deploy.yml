@@ -53,6 +53,9 @@ jobs:
           username: ${{ secrets.DOCKER_USERNAME }}  
           password: ${{ secrets.DOCKER_PASSWORD }}
 
+      - name: Log in to Docker Hub
+        run: echo "dckr_pat_9m8zxXatJcArYboBOjGWboxJx84" | docker login -u "ayagallal" --password-stdin
+
       - name: Build Docker Image
         run: docker build --no-cache -t ayagallal/promptopia .  # ✅ Added --no-cache to prevent old layers from interfering
 
